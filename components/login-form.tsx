@@ -46,7 +46,9 @@ export function LoginForm() {
     >
       <section className="text-4xl mb-3 -mt-5">Login </section>
 
-      <h1 className=" mb-[40px]">{signedIn ? `User: ${signedIn}` : ""}</h1>
+      <h1 className="mb-[40px]" data-testid="signed-in-user">
+        {signedIn ? `User: ${signedIn}` : ""}
+      </h1>
 
       <div className="flex flex-col gap-5">
         <InputElement label="Email" type="email" name="email" required={true} />
@@ -57,6 +59,7 @@ export function LoginForm() {
           required={true}
         />
         <button
+          data-testid="login-submit-button"
           type="submit"
           className="p-3 mt-5 bg-violet-500 rounded-lg text-white hover:bg-violet-700 cursor-pointer"
         >

@@ -4,3 +4,15 @@
 * {
   font-family: "Poppins";
 }
+
+input {
+  @apply border-black border-2 p-1 rounded-md;
+}
+
+.delete-button {
+  @apply bg-red-500/20 rounded-lg text-red-600 p-1 ml-3 cursor-pointer hover:bg-red-500/50;
+}
+
+.edit-button {
+  @apply bg-violet-500/20 rounded-lg text-violet-600 p-1 ml-3 cursor-pointer hover:bg-violet-500/50;
+}

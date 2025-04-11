@@ -14,6 +14,7 @@ export type Database = {
           created_at: string
           id: number
           post_body: string | null
+          post_image: string | null
           post_title: string | null
           user_id: string
         }
@@ -21,6 +22,7 @@ export type Database = {
           created_at?: string
           id?: number
           post_body?: string | null
+          post_image?: string | null
           post_title?: string | null
           user_id: string
         }
@@ -28,8 +30,29 @@ export type Database = {
           created_at?: string
           id?: number
           post_body?: string | null
+          post_image?: string | null
           post_title?: string | null
           user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["firebase_uid"]
+          },
+        ]
+      }
+      user: {
+        Row: {
+          firebase_uid: string
+        }
+        Insert: {
+          firebase_uid: string
+        }
+        Update: {
+          firebase_uid?: string
         }
         Relationships: []
       }
@@ -38,7 +61,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      firebase_uid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

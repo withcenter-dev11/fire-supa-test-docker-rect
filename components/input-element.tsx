@@ -22,6 +22,7 @@ export function InputElement({
         id={name}
         name={name}
         required={required}
+        data-testId={name}
       />
     </div>
   );

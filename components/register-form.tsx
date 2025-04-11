@@ -1,10 +1,13 @@
 "use client";
-import React, { FormEventHandler } from "react";
+import React, { FormEventHandler, useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../lib/firebase-setup";
 import { InputElement } from "./input-element";
+import { addUser } from "../lib/supabase-functions";
 
 export function RegisterForm() {
+  const [pageError, setPageError] = useState<string>();
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -17,13 +20,21 @@ export function RegisterForm() {
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        alert("User created successfully");
+      .then(async (user) => {
+        const { data, error } = await addUser(user.user.uid);
 
-        // setCustomClaim(user.user.uid);
+        if (error) {
+          //delete firebase user if supabase user is not created
+          auth.currentUser?.delete();
+          setPageError(`${error.code}: ${error.name} - ${error.message}`);
+        }
+
+        if (data) {
+          alert("User created successfully");
+        }
       })
       .catch((error) => {
-        alert(error);
+        setPageError(error);
       });
   };
   return (
